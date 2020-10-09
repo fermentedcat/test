@@ -16,9 +16,23 @@ Alla tecken som inte är a-z eller någon av ovanstående (t ex kommatecken, pun
 
 */
 
-function safe_string() {
+function safe_string(string) {
+    let ok = "0123456789/abcdefghijklmnopqrstuvxyz ABCDEFGHIJKLMNOPQRSTUVXYZ";
+    let safe = ["&lt;", "&gt;", "&aring;", "&Aring;", "&auml;", "&Auml;", "&ouml;", "&Ouml;", "&apos;"];
+    let unsafe = ["\<", "\>", "\å", "\Å", "\ä", "\Ä", "\ö", "\Ö", "\'"];
+    let result = "";
 
+    for (let i = 0; i < string.length; i++) {
+        let replace = unsafe.indexOf(string[i]);
+        let check_ok = ok.indexOf(string[i]);
+        if (replace >= 0) {
+            result += safe[replace];
+        } else if (check_ok >= 0) {
+            result += ok[check_ok];
+        }
+    }
+    
+    return result;
 }
 
-console.log( safe_string( "<h1>Sjörövare, O'hoj</h1>" ) ); // Expected output: &lt;h1&gt;Sj&ouml;r&ouml;vare O&apos;hoj&lt;/h1&gt;
-
+console.log( safe_string( "<h1>Sjörövare, O'hoj</h1>" ) ); // Expected output: //&lt;h1&gt;Sj&ouml;r&ouml;vare O&apos;hoj&lt;/h1&gt;

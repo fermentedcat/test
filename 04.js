@@ -18,7 +18,25 @@ Exempel på värden och deras svar:
 
 */
 
-function get_average_sum() {
+function get_average_sum(array) {
+    let is_integer = true;
+    for (let num of array) {
+        if (Number.isInteger(num)) {
+            is_integer = false;
+        }
+    }
     
+    if (array.length >= 10 || array.length <= 2 || !is_integer) {
+        return false;
+    } else {
+        let sum = array.reduce((acc, curr_val) => acc + curr_val);
+        let average = sum / array.length;
+    
+        return {average, sum};
+    }
 }
+
+let average_and_sum = get_average_sum([4, 5, 6, 7.4]);
+console.log(average_and_sum.average);
+console.log(average_and_sum.sum);
 
